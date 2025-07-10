@@ -1,0 +1,64 @@
+1. create a package.json file
+npm init (-y) -> can pass the y flag for default details filled in
+
+2. install eslint as a dev dependency
+npm install eslint --save-dev [--save-dev or -D]
+
+3.create elsint configuration file
+npx eslint --init
+
+4. install a vscode eslint extension
+
+5. install prettier as a dev dependency
+npm install --save-dev --save-exact prettier
+
+6. create a configuration file for prettier in the root dir
+file holds:
+	{
+  "trailingComma": "es5",
+  "tabWidth": 4,
+  "semi": true,
+  "bracketSpacing": true,
+  "singleQuote": true
+}
+
+7. install the vscode prettier extension
+Go to the settings.json file in VS Code and change the relevant existing line as below.
+
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+
+To make sure Prettier formats on save, insert the following line on the same file mentioned above.
+
+"editor.formatOnSave": true,
+
+8. install eslint-config-prettier package
+npm i eslint-config-prettier
+to avoid eslint rules conflicting with prettier.
+
+9. add prettier to the extends array as the last item
+
+
+ALTERNATIVE
+----------------------------------------------
+npx install-peerdeps --dev eslint-config-airbnb
+create a .eslintrc.json file
+{
+  "extends": [
+    "airbnb-base",
+    "airbnb/whitespace"
+  ],
+  "rules":{
+    "quotes": ["warn", "double"],
+    "semi" :["error", "always"]
+  }
+}
+
+
+to remove eslint react dependencies npm uninstall --save-dev eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
+
+

@@ -1,0 +1,39 @@
+BASIC WAY TO DEPLOY A DJANGO REST API ON RENDER.COM
+
+Prerequisites
+- django rest-api project ready for deployment
+- github/gitlab account with you project pushed to a repositoy
+
+pip install gunicorn psycopg2-binary whitenoise dj-database-url
+
+Update settings.py
+# can read it from .env file during local development
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+
+   # Allowed hosts
+   ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(' ') if not DEBUG else [] # ALLOWED_HOSTS = ["*"]
+
+   # Database configuration
+   DATABASES = {
+       'default': dj_database_url.parse(os.environ.get('DATABASE_URL', ''))
+   } # DATABASE_URL is the external url from render after creating a database instance
+   
+    # Static files configuration
+   STATIC_URL = '/static/'
+   STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+   
+    MIDDLEWARE = [
+       'whitenoise.middleware.WhiteNoiseMiddleware',
+   ] 
+
+build commands
+pip install -r requirements.txt
+ python manage.py collectstatic --noinput
+ python manage.py migrate
+ 
+ [build command] pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+ 
+ start command
+ python -m gunicorn myproject.wsgi:application or python -m gunicorn myproject.wsgi
+ 
+set env variables
